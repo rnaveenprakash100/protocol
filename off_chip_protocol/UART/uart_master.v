@@ -9,15 +9,15 @@ module uart_master#(
     output reg tx,
     output reg busy
 );
-    parameter CLKS_PER_BIT=SYS_CLK/BAUD_RATE;
-    parameter N=$clog2(CLKS_PER_BIT);
-    reg[N-1:0]clk_count;
-    reg baud_tick;
-    parameter IDLE=0,START=1,DATA=2,PARITY=3,STOP=4;
-    reg[2:0]state,next_state;
-    reg[2:0]bit_index;
-    reg parity_bit;
-    always@(posedge clk)begin
+parameter CLKS_PER_BIT=SYS_CLK/BAUD_RATE;
+parameter N=$clog2(CLKS_PER_BIT);
+reg[N-1:0]clk_count;
+reg baud_tick;
+parameter IDLE=0,START=1,DATA=2,PARITY=3,STOP=4;
+reg[2:0]state,next_state;
+reg[2:0]bit_index;
+reg parity_bit;
+always@(posedge clk)begin
         if(rst)begin
             clk_count<=0;
             baud_tick<=0;
@@ -31,7 +31,6 @@ module uart_master#(
             end
         end
     end
-
     always@(posedge clk)begin
         if(rst)
             state<=IDLE;
@@ -85,5 +84,4 @@ module uart_master#(
             endcase
         end
     end
-
 endmodule
